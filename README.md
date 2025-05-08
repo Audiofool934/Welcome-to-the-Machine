@@ -18,13 +18,13 @@
   - Mathematical Statistics
 
 - **Machine Learning/Statistical Learning**
-  - [ ] **Overview**
+  - [ ] [**Overview**](notes/machine-learning_statistical-learning/overview.md)
     - Categories of ML models
       - Supervised vs. Unsupervised
       - Generative vs. Discriminative
       - Parametric vs. Non-parametric
     - Representation, Inference, and Learning
-  - [ ] **Regression**
+  - [ ] [**Regression**](notes/machine-learning_statistical-learning/regression.md)
     - Polynomial Regression
     - Linear Regression
       - Why MSE(Mean Squared Error)?
@@ -41,7 +41,7 @@
       - Sigmoid(Logistic) and Softmax
       - Why CE(Cross Entropy)?
       - Criterion on classification
-    - MSE, CE, and KL Divergence
+    - MLE, CE, and KL Divergence
   - **$ \cdots $ 🏗️ $ \text{work in progress} $ 🏗️ $ \cdots $**
 - **Deep Learning**
   - [ ] **Overview**

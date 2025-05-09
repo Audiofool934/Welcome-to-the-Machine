@@ -495,25 +495,25 @@ Limit theorems describe the long-term behavior of sequences of random variables.
 
 ##### 1. The Law of Large Numbers (LLN)
 
-*   **Concept:** The LLN states that the average of the results obtained from a large number of independent and identically distributed (i.i.d.) random trials will tend to get closer to the **true expected value** of a single trial as more trials are performed.
-*   **Intuition:** If you flip a fair coin many times, the proportion of heads you observe will likely be very close to 0.5. The more you flip, the closer you expect this proportion to get. The sample mean "settles down" to the true population mean.
-*   **Formal Statements (Two main forms):**
+- **Concept:** The LLN states that the average of the results obtained from a large number of independent and identically distributed (i.i.d.) random trials will tend to get closer to the **true expected value** of a single trial as more trials are performed.
+- **Intuition:** If you flip a fair coin many times, the proportion of heads you observe will likely be very close to 0.5. The more you flip, the closer you expect this proportion to get. The sample mean "settles down" to the true population mean.
+- **Formal Statements (Two main forms):**
     Let $X_1, X_2, \dots, X_n$ be a sequence of i.i.d. random variables with a finite expected value $E[X_i] = \mu$. Let $\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i$ be the sample mean.
 
-    *   **Weak Law of Large Numbers (WLLN):**
+    - **Weak Law of Large Numbers (WLLN):**
         For any $\epsilon > 0$,
         $$ \lim_{n \to \infty} P(|\bar{X}_n - \mu| < \epsilon) = 1 $$
         This means that for a sufficiently large $n$, the sample mean $\bar{X}_n$ is likely to be very close to the true mean $\mu$. It describes convergence *in probability*.
 
-    *   **Strong Law of Large Numbers (SLLN):**
+    - **Strong Law of Large Numbers (SLLN):**
         $$ P\left(\lim_{n \to \infty} \bar{X}_n = \mu\right) = 1 $$
         This is a stronger statement, implying that $\bar{X}_n$ converges to $\mu$ *almost surely* (i.e., with probability 1). For almost every sequence of outcomes, the sample mean will eventually converge to the true mean.
 
-*   **Why it's important for ML/DL & Statistics:**
-    *   **Justification for Monte Carlo Methods:** Many complex integrals or expectations are estimated by simulating random samples and taking their average. The LLN guarantees that this average converges to the true value. (e.g., estimating expected reward in reinforcement learning, approximating posterior distributions in Bayesian inference via MCMC).
-    *   **Foundation of Parameter Estimation:** When we use a sample mean to estimate a population mean (like in MLE for Gaussian mean), the LLN tells us that with enough data, our estimate will be close to the true parameter.
-    *   **Empirical Risk Minimization:** In supervised learning, we often minimize the average loss over a training set (empirical risk). The LLN suggests that, under certain conditions, this empirical risk will converge to the true expected risk (generalization error) as the training set size grows.
-    *   **Stability of Frequencies:** The observed frequency of an event in many trials approximates its true probability.
+- **Why it's important for ML/DL & Statistics:**
+    - **Justification for Monte Carlo Methods:** Many complex integrals or expectations are estimated by simulating random samples and taking their average. The LLN guarantees that this average converges to the true value. (e.g., estimating expected reward in reinforcement learning, approximating posterior distributions in Bayesian inference via MCMC).
+    - **Foundation of Parameter Estimation:** When we use a sample mean to estimate a population mean (like in MLE for Gaussian mean), the LLN tells us that with enough data, our estimate will be close to the true parameter.
+    - **Empirical Risk Minimization:** In supervised learning, we often minimize the average loss over a training set (empirical risk). The LLN suggests that, under certain conditions, this empirical risk will converge to the true expected risk (generalization error) as the training set size grows.
+    - **Stability of Frequencies:** The observed frequency of an event in many trials approximates its true probability.
 
 **Implementation (Illustrative Simulation):**
 
@@ -546,23 +546,23 @@ for n_rolls in range(1, num_trials_max + 1):
 
 ##### 2. The Central Limit Theorem (CLT)
 
-*   **Concept:** The CLT is a remarkable result stating that, under certain (often mild) conditions, the sum (or average) of a large number of independent random variables, each with finite mean and variance, will be approximately **Normally distributed (Gaussian)**, *regardless of the original distribution of the individual variables*.
-*   **Intuition:** Many real-world phenomena result from the sum of numerous small, independent effects. The CLT explains why the Normal distribution appears so frequently in nature and in data (e.g., measurement errors, heights of people).
-*   **Formal Statement (Lindeberg-Lévy CLT, common version):**
+- **Concept:** The CLT is a remarkable result stating that, under certain (often mild) conditions, the sum (or average) of a large number of independent random variables, each with finite mean and variance, will be approximately **Normally distributed (Gaussian)**, *regardless of the original distribution of the individual variables*.
+- **Intuition:** Many real-world phenomena result from the sum of numerous small, independent effects. The CLT explains why the Normal distribution appears so frequently in nature and in data (e.g., measurement errors, heights of people).
+- **Formal Statement (Lindeberg-Lévy CLT, common version):**
     Let $X_1, X_2, \dots, X_n$ be a sequence of i.i.d. random variables with finite expected value $E[X_i] = \mu$ and finite non-zero variance $Var(X_i) = \sigma^2$.
     Let $S_n = \sum_{i=1}^n X_i$ be the sum, and $\bar{X}_n = \frac{S_n}{n}$ be the sample mean.
     Then, the standardized sum (or standardized mean) converges in distribution to a standard Normal distribution $N(0,1)$ as $n \to \infty$:
     $$ Z_n = \frac{S_n - n\mu}{\sigma\sqrt{n}} = \frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0,1) $$
     This means for large $n$:
-    *   The sum $S_n$ is approximately $N(n\mu, n\sigma^2)$.
-    *   The sample mean $\bar{X}_n$ is approximately $N(\mu, \sigma^2/n)$.
+    - The sum $S_n$ is approximately $N(n\mu, n\sigma^2)$.
+    - The sample mean $\bar{X}_n$ is approximately $N(\mu, \sigma^2/n)$.
 
-*   **Why it's important for ML/DL & Statistics:**
-    *   **Foundation for Hypothesis Testing and Confidence Intervals:** Many statistical tests (like t-tests, z-tests) and methods for constructing confidence intervals for means rely on the (approximate) Normality of sample means, even if the underlying data is not Normal.
-    *   **Understanding Sampling Distributions:** The CLT tells us that the sampling distribution of the sample mean (and many other estimators) tends to be Normal for large samples. This is crucial for making inferences about population parameters.
-    *   **Approximations:** Can be used to approximate probabilities for sums/averages from non-Normal distributions (e.g., Binomial distribution can be approximated by Normal for large $n$).
-    *   **Model Assumptions:** In some ML models (like Linear Regression), assumptions about Normally distributed errors are made. The CLT provides some justification if errors are thought to be sums of many small unobserved factors.
-    *   **Weight Initialization in NNs:** Some initialization schemes (like Xavier/He) are designed assuming activations/gradients behave somewhat Normally, partly due to CLT-like effects from summing many weighted inputs.
+- **Why it's important for ML/DL & Statistics:**
+    - **Foundation for Hypothesis Testing and Confidence Intervals:** Many statistical tests (like t-tests, z-tests) and methods for constructing confidence intervals for means rely on the (approximate) Normality of sample means, even if the underlying data is not Normal.
+    - **Understanding Sampling Distributions:** The CLT tells us that the sampling distribution of the sample mean (and many other estimators) tends to be Normal for large samples. This is crucial for making inferences about population parameters.
+    - **Approximations:** Can be used to approximate probabilities for sums/averages from non-Normal distributions (e.g., Binomial distribution can be approximated by Normal for large $n$).
+    - **Model Assumptions:** In some ML models (like Linear Regression), assumptions about Normally distributed errors are made. The CLT provides some justification if errors are thought to be sums of many small unobserved factors.
+    - **Weight Initialization in NNs:** Some initialization schemes (like Xavier/He) are designed assuming activations/gradients behave somewhat Normally, partly due to CLT-like effects from summing many weighted inputs.
 
 **Implementation (Illustrative Simulation):**
 Simulate taking the average of $k$ dice rolls (which are Uniformly distributed) many times. The distribution of these averages should look Normal for large $k$.
@@ -630,13 +630,13 @@ While the Law of Large Numbers tells us that sample averages converge to their e
 
 ##### 1. Markov's Inequality
 
-*   **Statement:** For any **non-negative** random variable $X$ and any $a > 0$:
+- **Statement:** For any **non-negative** random variable $X$ and any $a > 0$:
     $$ P(X \ge a) \le \frac{E[X]}{a} $$
-*   **Intuition:** If a non-negative random variable has a small mean, it's unlikely to take on a very large value. The probability of $X$ being at least $a$ is bounded by how many "units of $a$" fit into its mean.
-*   **Requirements:** $X \ge 0$.
-*   **Strength:** Very general (requires only non-negativity and finite mean), but often gives a loose bound.
-*   **Use:** Primarily a theoretical tool used to prove other inequalities (like Chebyshev's).
-*   **Extended version for nondecreasing functions:** 
+- **Intuition:** If a non-negative random variable has a small mean, it's unlikely to take on a very large value. The probability of $X$ being at least $a$ is bounded by how many "units of $a$" fit into its mean.
+- **Requirements:** $X \ge 0$.
+- **Strength:** Very general (requires only non-negativity and finite mean), but often gives a loose bound.
+- **Use:** Primarily a theoretical tool used to prove other inequalities (like Chebyshev's).
+- **Extended version for nondecreasing functions:** 
     If $\varphi$ is a nondecreasing nonnegative function, $X$ is a (not necessarily nonnegative) random variable, and $\varphi(a) > 0$, then
 
     $$\mathbb{P}(X \geq a) \leq \frac{\mathbb{E}(\varphi(X))}{\varphi(a)}.$$
@@ -647,17 +647,17 @@ While the Law of Large Numbers tells us that sample averages converge to their e
 
 ##### 2. Chebyshev's Inequality
 
-*   **Statement:** For any random variable $X$ with finite mean $\mu = E[X]$ and finite non-zero variance $\sigma^2 = Var(X)$, and for any $k > 0$:
+- **Statement:** For any random variable $X$ with finite mean $\mu = E[X]$ and finite non-zero variance $\sigma^2 = Var(X)$, and for any $k > 0$:
     $$ P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2} $$
     Alternatively, for any $\epsilon > 0$ (letting $\epsilon = k\sigma$):
     $$ P(|X - \mu| \ge \epsilon) \le \frac{\sigma^2}{\epsilon^2} $$
-*   **Intuition:** The probability that a random variable deviates from its mean by more than $k$ standard deviations is small (at most $1/k^2$). It quantifies the idea that values far from the mean are less likely if the variance is small.
-*   **Requirements:** Finite mean and variance.
-*   **Strength:** Stronger than Markov's (uses variance), but still can be loose. Applies to any distribution with finite mean/variance.
-*   **Use:**
-    *   Provides a way to bound deviations without knowing the specific distribution.
-    *   Used to prove the Weak Law of Large Numbers.
-    *   Example: The probability of a random variable being more than 2 standard deviations away from its mean is at most $1/2^2 = 0.25$. For 3 standard deviations, at most $1/3^2 \approx 0.11$. (Compare to Normal distribution's $\approx 0.05$ and $\approx 0.003$ respectively; Chebyshev is more general but looser).
+- **Intuition:** The probability that a random variable deviates from its mean by more than $k$ standard deviations is small (at most $1/k^2$). It quantifies the idea that values far from the mean are less likely if the variance is small.
+- **Requirements:** Finite mean and variance.
+- **Strength:** Stronger than Markov's (uses variance), but still can be loose. Applies to any distribution with finite mean/variance.
+- **Use:**
+    - Provides a way to bound deviations without knowing the specific distribution.
+    - Used to prove the Weak Law of Large Numbers.
+    - Example: The probability of a random variable being more than 2 standard deviations away from its mean is at most $1/2^2 = 0.25$. For 3 standard deviations, at most $1/3^2 \approx 0.11$. (Compare to Normal distribution's $\approx 0.05$ and $\approx 0.003$ respectively; Chebyshev is more general but looser).
 
 **Derivation of Chebyshev from Markov:**
 Let $Y = (X-\mu)^2$. $Y$ is non-negative. $E[Y] = E[(X-\mu)^2] = \sigma^2$.
@@ -667,7 +667,7 @@ $P(Y \ge \epsilon^2) \le \frac{E[Y]}{\epsilon^2} = \frac{\sigma^2}{\epsilon^2}$.
 
 ##### 3. Hoeffding's Inequality
 
-*   **Statement:** Provides a tighter bound for sums of **bounded** independent random variables.
+- **Statement:** Provides a tighter bound for sums of **bounded** independent random variables.
     Let $X_1, \dots, X_n$ be independent random variables such that $a_i \le X_i \le b_i$ for all $i$ (i.e., $X_i$ is bounded in the interval $[a_i, b_i]$). Let $S_n = \sum_{i=1}^n X_i$. Then for any $t > 0$:
     $$ P(S_n - E[S_n] \ge t) \le \exp\left(-\frac{2t^2}{\sum_{i=1}^n (b_i - a_i)^2}\right) $$
     And for the sample mean $\bar{X}_n = S_n/n$:
@@ -676,14 +676,14 @@ $P(Y \ge \epsilon^2) \le \frac{E[Y]}{\epsilon^2} = \frac{\sigma^2}{\epsilon^2}$.
     $$ P(\bar{X}_n - \mu \ge \epsilon) \le \exp\left(-\frac{2n\epsilon^2}{B^2}\right) $$
     And by symmetry for the two-sided bound:
     $$ P(|\bar{X}_n - \mu| \ge \epsilon) \le 2\exp\left(-\frac{2n\epsilon^2}{B^2}\right) $$
-*   **Intuition:** The probability that the sample mean deviates significantly from the true mean decreases exponentially with the number of samples $n$ and with the square of the deviation $\epsilon$. The bound depends on the range of the variables.
-*   **Requirements:** Independent random variables, bounded range for each.
-*   **Strength:** Often much tighter than Chebyshev's for bounded variables, especially for tail probabilities. Gives exponential decay.
-*   **Why it's important for ML/DL:**
-    *   **Generalization Bounds:** Crucial in statistical learning theory (e.g., PAC learning). If the loss function is bounded (e.g., 0-1 loss in classification), Hoeffding's inequality can be used to bound the probability that the empirical error (on training set) differs from the true error (generalization error) by more than $\epsilon$.
+- **Intuition:** The probability that the sample mean deviates significantly from the true mean decreases exponentially with the number of samples $n$ and with the square of the deviation $\epsilon$. The bound depends on the range of the variables.
+- **Requirements:** Independent random variables, bounded range for each.
+- **Strength:** Often much tighter than Chebyshev's for bounded variables, especially for tail probabilities. Gives exponential decay.
+- **Why it's important for ML/DL:**
+    - **Generalization Bounds:** Crucial in statistical learning theory (e.g., PAC learning). If the loss function is bounded (e.g., 0-1 loss in classification), Hoeffding's inequality can be used to bound the probability that the empirical error (on training set) differs from the true error (generalization error) by more than $\epsilon$.
         $P(|\text{EmpiricalRisk} - \text{TrueRisk}| \ge \epsilon) \le 2\exp(-2n\epsilon^2 / B^2)$
         This shows that with enough samples ($n$), the empirical risk is likely close to the true risk.
-    *   **Analysis of Randomized Algorithms:** Used in analyzing algorithms that involve averaging bounded random quantities.
+    - **Analysis of Randomized Algorithms:** Used in analyzing algorithms that involve averaging bounded random quantities.
 
 **Simplified Hoeffding for Bernoulli RVs (Common in ML):**
 If $X_i \sim \text{Bernoulli}(p)$, then $X_i \in [0,1]$, so $B=1$.
@@ -692,9 +692,9 @@ $$ P(|\hat{p} - p| \ge \epsilon) \le 2\exp(-2n\epsilon^2) $$
 
 ##### 4. (Briefly) Other Important Inequalities
 
-*   **Chernoff Bounds:** Similar to Hoeffding's but often tighter, particularly for sums of specific types of random variables (like Bernoulli). They are derived using the moment generating function (MGF) and Markov's inequality applied to $e^{sX}$.
-*   **Bernstein's Inequality:** Provides tighter bounds than Hoeffding's when the variance of the random variables is small compared to their range. It incorporates variance information.
-*   **McDiarmid's Inequality (Bounded Differences Inequality):** Generalizes Hoeffding's to functions of many independent random variables, where changing one variable doesn't change the function's value too much (bounded differences property). Very powerful for analyzing complex statistics or outputs of randomized algorithms.
+- **Chernoff Bounds:** Similar to Hoeffding's but often tighter, particularly for sums of specific types of random variables (like Bernoulli). They are derived using the moment generating function (MGF) and Markov's inequality applied to $e^{sX}$.
+- **Bernstein's Inequality:** Provides tighter bounds than Hoeffding's when the variance of the random variables is small compared to their range. It incorporates variance information.
+- **McDiarmid's Inequality (Bounded Differences Inequality):** Generalizes Hoeffding's to functions of many independent random variables, where changing one variable doesn't change the function's value too much (bounded differences property). Very powerful for analyzing complex statistics or outputs of randomized algorithms.
 
 **Why Concentration Inequalities Matter for ML Theory:**
 These inequalities are the workhorses for proving that machine learning algorithms generalize well. They allow us to make statements like:

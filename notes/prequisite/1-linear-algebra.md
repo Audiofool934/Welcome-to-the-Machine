@@ -1,5 +1,15 @@
 ## Linear Algebra
 
+- [Linear Algebra](#linear-algebra)
+    - [a. Scalars, Vectors, Matrices, Tensors](#a-scalars-vectors-matrices-tensors)
+    - [b. Dot Product (Inner Product)](#b-dot-product-inner-product)
+    - [c. Matrix Multiplication](#c-matrix-multiplication)
+    - [d. Transpose](#d-transpose)
+    - [e. Inverse \& Pseudo-inverse](#e-inverse--pseudo-inverse)
+    - [f. Determinant](#f-determinant)
+    - [g. Eigenvalues \& Eigenvectors](#g-eigenvalues--eigenvectors)
+    - [h. Singular Value Decomposition (SVD)](#h-singular-value-decomposition-svd)
+
 **Concept:** Linear algebra is the branch of mathematics concerning vector spaces and linear mappings between them. In ML, it's fundamental for **<span style='color:lightgreen'>representing data, defining transformations, and solving systems of equations</span>.**
 
 **Why it's important for ML/DL:**
@@ -8,8 +18,6 @@
 - **Transformations:** <u>Linear transformations</u> (matrix multiplications) are core operations in many ML models, especially neural networks.
 - **Dimensionality Reduction:** Techniques like PCA rely heavily on linear algebra.
 - **Optimization:** Solving linear systems is often a sub-problem in optimization routines.
-
-**Key Concepts & Implementations:**
 
 #### a. Scalars, Vectors, Matrices, Tensors
 

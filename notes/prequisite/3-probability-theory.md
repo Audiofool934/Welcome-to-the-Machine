@@ -1,5 +1,26 @@
 ## 3. Probability Theory
 
+- [3. Probability Theory](#3-probability-theory)
+    - [a. Probability Space $(\\Omega, \\mathcal{F}, P)$](#a-probability-space-omega-mathcalf-p)
+    - [b. Random Variables (RV)](#b-random-variables-rv)
+    - [c. Cumulative Distribution Function (CDF)](#c-cumulative-distribution-function-cdf)
+    - [d. Probability Mass Function (PMF) (for Discrete RVs)](#d-probability-mass-function-pmf-for-discrete-rvs)
+    - [e. Probability Density Function (PDF) (for Continuous RVs)](#e-probability-density-function-pdf-for-continuous-rvs)
+    - [f. Expected Value, Variance, Covariance](#f-expected-value-variance-covariance)
+    - [g. Joint, Marginal, and Conditional Distributions](#g-joint-marginal-and-conditional-distributions)
+      - [1. Joint Distributions](#1-joint-distributions)
+      - [2. Marginal Distributions](#2-marginal-distributions)
+      - [3. Conditional Distributions](#3-conditional-distributions)
+    - [h. Independence and Conditional Independence of Random Variables](#h-independence-and-conditional-independence-of-random-variables)
+    - [i. Limit Theorems: The Law of Large Numbers (LLN) and Central Limit Theorem (CLT)](#i-limit-theorems-the-law-of-large-numbers-lln-and-central-limit-theorem-clt)
+      - [1. The Law of Large Numbers (LLN)](#1-the-law-of-large-numbers-lln)
+      - [2. The Central Limit Theorem (CLT)](#2-the-central-limit-theorem-clt)
+    - [j. Concentration Inequalities](#j-concentration-inequalities)
+      - [1. Markov's Inequality](#1-markovs-inequality)
+      - [2. Chebyshev's Inequality](#2-chebyshevs-inequality)
+      - [3. Hoeffding's Inequality](#3-hoeffdings-inequality)
+      - [4. (Briefly) Other Important Inequalities](#4-briefly-other-important-inequalities)
+
 **Concept:** The mathematical framework for <u>quantifying uncertainty and randomness</u>. In its modern, axiomatic formulation, <u>probability is a type of measure</u>.
 
 **Why it's important for ML/DL:**
@@ -8,10 +29,6 @@
 - **Loss Functions:** Many loss functions are derived from <u>probabilistic principles</u> (e.g., cross-entropy from likelihood).
 - **Bayesian Methods:** Probabilistic approach to inference and learning.
 - **Regularization:** Can sometimes be interpreted as imposing prior beliefs on parameters.
-
----
-
-**Key Concepts & Implementations:**
 
 #### a. Probability Space $(\Omega, \mathcal{F}, P)$
 
@@ -55,10 +72,6 @@ At the heart of probability theory is the **probability space**, a mathematical 
 
 ---
 
-You're absolutely right to want to introduce it that way! It's more precise and correctly frames the random variable as a measurable function. Let's revise that part.
-
----
-
 #### b. Random Variables (RV)
 
 - **Intuition (Recap):** A random variable assigns a numerical value to each possible outcome of a random experiment.
@@ -78,20 +91,20 @@ You're absolutely right to want to introduce it that way! It's more precise and 
     - This property is called **measurability** (specifically, $X$ is $\mathcal{F}/\mathcal{B}(\mathbb{R})$-measurable).
 
 - **Significance of Measurability & Connection to $P(X \le x)$:**
-    - The condition that $X^{-1}(B) \in \mathcal{F}$ for all Borel sets $B$ ensures that <span style='color:red'>we can assign probabilities to statements about $X$</span>. For example, "What is the probability that $X$ falls into the interval $[a,b]$?" The set $[a,b]$ is a Borel set, so $\{\omega \in \Omega : X(\omega) \in [a,b]\}$ is an event in $\mathcal{F}$, and thus $P(\{\omega \in \Omega : X(\omega) \in [a,b]\})$ is well-defined.
+    - The condition that $X^{-1}(B) \in \mathcal{F}$ for all Borel sets $B$ <span style='color:red'>ensures that we can assign probabilities to statements about $X$</span>. For example, "What is the probability that $X$ falls into the interval $[a,b]$?" The set $[a,b]$ is a Borel set, so $\{\omega \in \Omega : X(\omega) \in [a,b]\}$ <u>is an event in</u> $\mathcal{F}$, and thus $P(\{\omega \in \Omega : X(\omega) \in [a,b]\})$ is well-defined.
     - A crucial simplification (and an equivalent condition for measurability) is to check this property only for the ***generators*** of the Borel $\sigma$-algebra. Since intervals of the form $(-\infty, x]$ generate $\mathcal{B}(\mathbb{R})$, $X$ is a random variable if and only if:
         For every $x \in \mathbb{R}$, the set $\{\omega \in \Omega : X(\omega) \le x\}$ is an event in $\mathcal{F}$.
         (i.e., $X^{-1}((-\infty, x]) \in \mathcal{F}$ for all $x \in \mathbb{R}$).
     - This is precisely why we can define the Cumulative Distribution Function (CDF) as $F_X(x) = P(X \le x)$, because the set $\{\omega : X(\omega) \le x\}$ is guaranteed to be an event in $\mathcal{F}$ to which the probability measure $P$ can be applied.
 
-- **In summary:** A random variable is a function that translates outcomes from our original sample space $\Omega$ into real numbers, in such a way that we can meaningfully ask and answer probability questions about those real numbers (e.g., "What's the probability $X$ is less than 5?"). The "measurability" condition ensures this is always possible for any reasonable question we might ask about the values $X$ takes.
+- **In summary:** A random variable is a function that translates outcomes from our original sample space $\Omega$ into real numbers, <span style='color:lightblue'>in such a way that we can meaningfully ask and answer probability questions about those real numbers</span> (e.g., "What's the probability $X$ is less than 5?"). The "measurability" condition ensures this is always possible for any reasonable question we might ask about the values $X$ takes.
 
 - **Types of Random Variables:**
     - **Discrete Random Variable:** Takes on a finite or countably infinite number of distinct values. (The range of $X$ is a countable set).
     - **Continuous Random Variable:** Can take on any value within a continuous interval (or union of intervals). (Typically, its CDF is continuous).
 
 **Implementation Note:**
-- In NumPy/PyTorch, we usually work directly with the *realizations* (observed values) of random variables, or with objects that represent their distributions. The underlying mapping from $\Omega$ and the measurability condition are foundational assumptions that make these libraries work consistently.
+- In NumPy/PyTorch, we usually work directly with the *realizations* (observed values) of random variables, or with objects that represent their distributions. **The underlying mapping from $\Omega$ and the measurability condition are foundational assumptions that make these libraries work consistently**.
 
 ---
 
@@ -109,56 +122,7 @@ You're absolutely right to want to introduce it that way! It's more precise and 
 - The CDF uniquely defines the distribution of a random variable.
 - $P(a < X \le b) = F_X(b) - F_X(a)$ for $a < b$.
 
-**NumPy/PyTorch Implementation (Illustrative):**
-We often use libraries like `scipy.stats` (NumPy-based) or `torch.distributions` to work with CDFs of known distributions. For empirical data, we can compute the Empirical CDF (ECDF).
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.stats import norm, bernoulli
-import torch
-import torch.distributions as dist
-
-# --- Using scipy.stats ---
-# Normal (Gaussian) CDF
-mu, sigma = 0, 1
-x_values = np.linspace(-3, 3, 100)
-cdf_normal_scipy = norm.cdf(x_values, loc=mu, scale=sigma)
-
-# plt.figure(figsize=(12, 4))
-# plt.subplot(1, 2, 1)
-# plt.plot(x_values, cdf_normal_scipy, label=f'Normal CDF (mu={mu}, sigma={sigma})')
-# plt.title('Normal CDF (scipy.stats)')
-# plt.xlabel('x')
-# plt.ylabel('F(x)')
-# plt.legend()
-# plt.grid(True)
-
-# Empirical CDF (ECDF) from samples
-samples = np.random.normal(mu, sigma, size=200)
-# Sort samples
-sorted_samples = np.sort(samples)
-# Calculate y-values for ECDF (steps from 0 to 1)
-y_ecdf = np.arange(1, len(sorted_samples) + 1) / len(sorted_samples)
-
-# plt.subplot(1, 2, 2)
-# plt.step(sorted_samples, y_ecdf, label='Empirical CDF (ECDF)')
-# plt.plot(x_values, norm.cdf(x_values, mu, sigma), 'r--', label='True CDF', alpha=0.7)
-# plt.title('Empirical CDF vs True CDF')
-# plt.xlabel('x')
-# plt.ylabel('F(x)')
-# plt.legend()
-# plt.grid(True)
-# plt.tight_layout()
-# plt.show()
-
-# --- Using torch.distributions ---
-# Note: PyTorch distributions often provide log_prob, but CDF is also available for many.
-normal_dist_pt = dist.Normal(torch.tensor(mu, dtype=torch.float32), torch.tensor(sigma, dtype=torch.float32))
-cdf_normal_pytorch = normal_dist_pt.cdf(torch.tensor(x_values, dtype=torch.float32))
-# print(f"PyTorch Normal CDF at x=0: {normal_dist_pt.cdf(torch.tensor(0.0)).item()}") # Should be 0.5 for N(0,1)
-```
-*For the talk, show a plot of a Gaussian CDF and an ECDF from samples.*
+![cdf_n_ecdf](media/cdf_n_ecdf.png)
 
 ---
 
@@ -179,39 +143,7 @@ cdf_normal_pytorch = normal_dist_pt.cdf(torch.tensor(x_values, dtype=torch.float
 - **Categorical($p_1, \dots, p_K$):** $X \in \{1,\dots,K\}$. $p_X(k) = p_k$.
 - **Poisson($\lambda$):** $X \in \{0,1,\dots\}$. $p_X(k) = \frac{\lambda^k e^{-\lambda}}{k!}$.
 
-**NumPy/PyTorch Implementation:**
-
-```python
-# --- Using scipy.stats ---
-# Bernoulli PMF
-p_bern = 0.7
-x_bern = np.array([0, 1])
-pmf_bern_scipy = bernoulli.pmf(x_bern, p=p_bern)
-# print(f"Bernoulli PMF (scipy) for p={p_bern}: P(X=0)={pmf_bern_scipy[0]:.2f}, P(X=1)={pmf_bern_scipy[1]:.2f}")
-
-# plt.figure(figsize=(6,4))
-# plt.bar(x_bern, pmf_bern_scipy, tick_label=['0 (Failure)', '1 (Success)'], width=0.1)
-# plt.title(f'Bernoulli PMF (p={p_bern})')
-# plt.xlabel('x')
-# plt.ylabel('p(x)')
-# plt.show()
-
-# --- Using torch.distributions ---
-bernoulli_dist_pt = dist.Bernoulli(probs=torch.tensor(p_bern))
-# PMF values are often obtained via log_prob and then exp()
-log_pmf_0 = bernoulli_dist_pt.log_prob(torch.tensor(0.))
-log_pmf_1 = bernoulli_dist_pt.log_prob(torch.tensor(1.))
-# print(f"Bernoulli (PyTorch) log P(X=0): {log_pmf_0.item():.2f}, P(X=0): {torch.exp(log_pmf_0).item():.2f}")
-# print(f"Bernoulli (PyTorch) log P(X=1): {log_pmf_1.item():.2f}, P(X=1): {torch.exp(log_pmf_1).item():.2f}")
-
-# Categorical distribution
-probs_cat_pt = torch.tensor([0.1, 0.6, 0.3]) # Probabilities for 3 categories (0, 1, 2)
-categorical_dist_pt = dist.Categorical(probs=probs_cat_pt)
-for i in range(3):
-    log_pmf_cat_i = categorical_dist_pt.log_prob(torch.tensor(i))
-    # print(f"Categorical (PyTorch) log P(X={i}): {log_pmf_cat_i.item():.2f}, P(X={i}): {torch.exp(log_pmf_cat_i).item():.2f}")
-```
-*For the talk, show the Bernoulli PMF plot.*
+![categorical_distribution_pmf](media/pmfs.png)
 
 ---
 
@@ -234,51 +166,7 @@ for i in range(3):
 - **Multivariate Normal($\mu, \Sigma$):** $f_X(x) = \frac{1}{(2\pi)^{k/2} |\Sigma|^{1/2}} \exp\left(-\frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu)\right)$, where $k$ is the dimension of $x$.
 - **Gamma($\alpha, \beta$):** $f_X(x) = \frac{\beta^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\beta x}$ for $x \ge 0$, and 0 otherwise.
 
-
-**NumPy/PyTorch Implementation:**
-
-```python
-# --- Using scipy.stats ---
-# Normal PDF
-mu, sigma = 0, 1
-x_norm_vals = np.linspace(mu - 3*sigma, mu + 3*sigma, 200)
-pdf_normal_scipy = norm.pdf(x_norm_vals, loc=mu, scale=sigma)
-
-# plt.figure(figsize=(12, 4))
-# plt.subplot(1, 2, 1)
-# plt.plot(x_norm_vals, pdf_normal_scipy, label=f'Normal PDF (scipy)')
-# plt.fill_between(x_norm_vals, pdf_normal_scipy, alpha=0.3)
-# plt.title(f'Normal PDF (mu={mu}, sigma={sigma})')
-# plt.xlabel('x')
-# plt.ylabel('f(x)')
-# plt.grid(True)
-
-# Uniform PDF
-a, b = 2, 5
-x_unif_vals = np.linspace(a-1, b+1, 200)
-pdf_uniform_scipy = scipy.stats.uniform.pdf(x_unif_vals, loc=a, scale=b-a) # scale is width b-a
-
-# plt.subplot(1, 2, 2)
-# plt.plot(x_unif_vals, pdf_uniform_scipy, label=f'Uniform PDF (scipy)')
-# plt.fill_between(x_unif_vals, pdf_uniform_scipy, where=(x_unif_vals>=a)&(x_unif_vals<=b), alpha=0.3)
-# plt.title(f'Uniform PDF (a={a}, b={b})')
-# plt.xlabel('x')
-# plt.ylabel('f(x)')
-# plt.grid(True)
-# plt.tight_layout()
-# plt.show()
-
-# --- Using torch.distributions ---
-normal_dist_pt = dist.Normal(torch.tensor(mu, dtype=torch.float32), torch.tensor(sigma, dtype=torch.float32))
-# PDF values are often obtained via log_prob and then exp()
-log_pdf_at_0 = normal_dist_pt.log_prob(torch.tensor(0.0))
-# print(f"Normal (PyTorch) log PDF(x=0): {log_pdf_at_0.item():.3f}, PDF(x=0): {torch.exp(log_pdf_at_0).item():.3f}") # Should be 1/sqrt(2pi) ~ 0.399
-
-uniform_dist_pt = dist.Uniform(torch.tensor(float(a)), torch.tensor(float(b)))
-log_pdf_unif_at_3 = uniform_dist_pt.log_prob(torch.tensor(3.0)) # 3.0 is within [2,5]
-# print(f"Uniform[{a},{b}] (PyTorch) log PDF(x=3): {log_pdf_unif_at_3.item():.3f}, PDF(x=3): {torch.exp(log_pdf_unif_at_3).item():.3f}") # Should be 1/(5-2) = 1/3 ~ 0.333
-```
-*For the talk, show the Normal PDF plot, and maybe the Uniform PDF plot to highlight density can be > 1.*
+![alt text](media/pdfs.png)
 
 ---
 
@@ -311,12 +199,6 @@ print(f"Theoretical stddev of N(5, 4): {normal_dist_pt.stddev}")
 
 ---
 
-You are absolutely right! Joint, marginal, and conditional distributions are fundamental concepts that build upon the single-variable distributions and are crucial for understanding relationships between multiple random variables, which is ubiquitous in machine learning.
-
-Let's insert a new section for these and then adjust the subsequent sections.
-
----
-
 #### g. Joint, Marginal, and Conditional Distributions
 
 So far, we've focused on single random variables. However, in most real-world scenarios and machine learning problems, we deal with **multiple random variables** simultaneously. We need tools to describe their collective behavior and interdependencies.
@@ -345,36 +227,7 @@ So far, we've focused on single random variables. However, in most real-world sc
     1.  $f_{X,Y}(x,y) \ge 0$ for all $x, y$.
     2.  $\int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f_{X,Y}(x,y) dx dy = 1$.
 
-**Implementation Example (Discrete Joint PMF):**
-Imagine two dice rolls, $X$ (first roll) and $Y$ (second roll). Assuming fair dice, each outcome $(x,y)$ has $P(X=x, Y=y) = 1/36$.
-We can represent this as a 2D array/matrix.
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns # For better heatmaps
-
-# Joint PMF for two fair dice rolls
-# X = outcome of 1st die, Y = outcome of 2nd die
-joint_pmf_dice = np.ones((6, 6)) / 36.0
-
-# print("Joint PMF for two dice rolls (X rows, Y columns):\n", joint_pmf_dice)
-# print(f"Sum of all joint probabilities: {np.sum(joint_pmf_dice)}") # Should be 1.0
-
-# plt.figure(figsize=(6,5))
-# sns.heatmap(joint_pmf_dice, annot=True, cmap="viridis", cbar=True,
-#             xticklabels=np.arange(1,7), yticklabels=np.arange(1,7))
-# plt.xlabel("Y (Second Die Roll)")
-# plt.ylabel("X (First Die Roll)")
-# plt.title("Joint PMF of Two Fair Dice Rolls")
-# plt.show()
-
-# Example: P(X <= 2, Y <= 3)
-# This would be summing joint_pmf_dice[0:2, 0:3]
-prob_Xle2_Yle3 = np.sum(joint_pmf_dice[:2, :3]) # X indices 0,1 (values 1,2); Y indices 0,1,2 (values 1,2,3)
-# print(f"P(X <= 2, Y <= 3) = {prob_Xle2_Yle3:.4f}") # Expected: (2*3)/36 = 6/36 = 1/6 = 0.1667
-```
-*PyTorch's `MultivariateNormal` or `Multinomial` distributions implicitly define joint distributions.*
+![alt text](media/gaussian_joint_pdf.png)
 
 ##### 2. Marginal Distributions
 
@@ -388,33 +241,7 @@ prob_Xle2_Yle3 = np.sum(joint_pmf_dice[:2, :3]) # X indices 0,1 (values 1,2); Y 
     The marginal PDF of $X$ is $f_X(x) = \int_{-\infty}^{\infty} f_{X,Y}(x,y) dy$.
     The marginal PDF of $Y$ is $f_Y(y) = \int_{-\infty}^{\infty} f_{X,Y}(x,y) dx$.
 
-**Implementation Example (Marginal from Joint PMF):**
-Continuing the two dice example:
 
-```python
-# Marginal PMF for X (first die roll) from joint_pmf_dice
-marginal_pmf_X = np.sum(joint_pmf_dice, axis=1) # Sum over columns (Y values) for each row (X value)
-# print("\nMarginal PMF for X (First Die Roll):\n", marginal_pmf_X)
-# print(f"P(X=1) = {marginal_pmf_X[0]:.4f}") # Expected: 6/36 = 1/6
-# print(f"Sum of marginal P(X=x): {np.sum(marginal_pmf_X)}") # Should be 1.0
-
-# Marginal PMF for Y (second die roll)
-marginal_pmf_Y = np.sum(joint_pmf_dice, axis=0) # Sum over rows (X values) for each column (Y value)
-# print("\nMarginal PMF for Y (Second Die Roll):\n", marginal_pmf_Y)
-# print(f"Sum of marginal P(Y=y): {np.sum(marginal_pmf_Y)}") # Should be 1.0
-
-# fig, axes = plt.subplots(1, 2, figsize=(10, 4))
-# axes[0].bar(np.arange(1,7), marginal_pmf_X, tick_label=np.arange(1,7))
-# axes[0].set_title("Marginal PMF of X (First Die)")
-# axes[0].set_xlabel("X")
-# axes[0].set_ylabel("p(x)")
-# axes[1].bar(np.arange(1,7), marginal_pmf_Y, tick_label=np.arange(1,7))
-# axes[1].set_title("Marginal PMF of Y (Second Die)")
-# axes[1].set_xlabel("Y")
-# axes[1].set_ylabel("p(y)")
-# plt.tight_layout()
-# plt.show()
-```
 
 ##### 3. Conditional Distributions
 
@@ -435,34 +262,7 @@ marginal_pmf_Y = np.sum(joint_pmf_dice, axis=0) # Sum over rows (X values) for e
     This generalizes to more variables: $f(x_1, \dots, x_n) = f(x_n|x_1, \dots, x_{n-1}) f(x_{n-1}|x_1, \dots, x_{n-2}) \dots f(x_2|x_1) f(x_1)$.
     This decomposition is fundamental to probabilistic graphical models (e.g., Bayesian Networks).
 
-**Implementation Example (Conditional from Joint PMF):**
-Continuing the two dice example: $P(Y=y | X=1)$ (distribution of second die given first die was 1).
 
-```python
-# Conditional PMF of Y given X=1 (i.e., first die roll is 1)
-# p(Y=y | X=1) = p(X=1, Y=y) / p(X=1)
-x_condition_val_idx = 0 # Corresponds to X=1
-joint_probs_X_eq_1 = joint_pmf_dice[x_condition_val_idx, :] # This is p(X=1, Y=y) for all y
-marginal_prob_X_eq_1 = marginal_pmf_X[x_condition_val_idx]   # This is p(X=1)
-
-if marginal_prob_X_eq_1 > 0:
-    conditional_pmf_Y_given_X1 = joint_probs_X_eq_1 / marginal_prob_X_eq_1
-    # print(f"\nConditional PMF P(Y=y | X=1):\n{conditional_pmf_Y_given_X1}")
-    # print(f"Sum of P(Y=y | X=1): {np.sum(conditional_pmf_Y_given_X1)}") # Should be 1.0
-    # For fair dice, this should still be [1/6, 1/6, 1/6, 1/6, 1/6, 1/6]
-
-    # plt.figure(figsize=(6,4))
-    # plt.bar(np.arange(1,7), conditional_pmf_Y_given_X1, tick_label=np.arange(1,7))
-    # plt.title("Conditional PMF P(Y=y | X=1)")
-    # plt.xlabel("Y (Second Die Roll)")
-    # plt.ylabel("p(y|X=1)")
-    # plt.ylim(0, np.max(conditional_pmf_Y_given_X1) * 1.2)
-    # plt.show()
-else:
-    print("Cannot compute conditional PMF as P(X=1) is zero.")
-
-```
-*In many ML models (e.g., regression, classification), we are essentially trying to learn a conditional distribution $P(Y_{\text{target}} | X_{\text{features}})$.*
 
 ---
 
@@ -515,34 +315,7 @@ Limit theorems describe the long-term behavior of sequences of random variables.
     - **Empirical Risk Minimization:** In supervised learning, we often minimize the average loss over a training set (empirical risk). The LLN suggests that, under certain conditions, this empirical risk will converge to the true expected risk (generalization error) as the training set size grows.
     - **Stability of Frequencies:** The observed frequency of an event in many trials approximates its true probability.
 
-**Implementation (Illustrative Simulation):**
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Simulate rolling a fair die (E[X] = (1+2+3+4+5+6)/6 = 3.5)
-true_mean = 3.5
-num_trials_max = 5000
-sample_means = []
-
-for n_rolls in range(1, num_trials_max + 1):
-    rolls = np.random.randint(1, 7, size=n_rolls) # Roll a die n_rolls times
-    current_sample_mean = np.mean(rolls)
-    sample_means.append(current_sample_mean)
-
-# plt.figure(figsize=(10, 6))
-# plt.plot(range(1, num_trials_max + 1), sample_means, label='Sample Mean of Die Rolls')
-# plt.axhline(true_mean, color='r', linestyle='--', label=f'True Mean ({true_mean})')
-# plt.xlabel("Number of Rolls (n)")
-# plt.ylabel("Sample Mean")
-# plt.title("Law of Large Numbers: Sample Mean Convergence")
-# plt.legend()
-# plt.grid(True)
-# plt.xscale('log') # Often useful to see convergence behavior
-# plt.show()
-```
-*The plot will show the sample mean fluctuating initially but gradually getting closer and stabilizing around the true mean as `n` increases.*
+![lln](media/lln.png)
 
 ##### 2. The Central Limit Theorem (CLT)
 
@@ -564,53 +337,9 @@ for n_rolls in range(1, num_trials_max + 1):
     - **Model Assumptions:** In some ML models (like Linear Regression), assumptions about Normally distributed errors are made. The CLT provides some justification if errors are thought to be sums of many small unobserved factors.
     - **Weight Initialization in NNs:** Some initialization schemes (like Xavier/He) are designed assuming activations/gradients behave somewhat Normally, partly due to CLT-like effects from summing many weighted inputs.
 
-**Implementation (Illustrative Simulation):**
 Simulate taking the average of $k$ dice rolls (which are Uniformly distributed) many times. The distribution of these averages should look Normal for large $k$.
 
-```python
-# Simulate the distribution of sample means from a non-Normal distribution (e.g., Uniform from a die roll)
-num_experiments = 10000 # How many sample means we will generate
-sample_size_k = 30      # How many dice rolls to average in each experiment (k)
-
-means_of_samples = []
-for _ in range(num_experiments):
-    # Each experiment: roll 'sample_size_k' dice and take their mean
-    one_sample = np.random.randint(1, 7, size=sample_size_k)
-    means_of_samples.append(np.mean(one_sample))
-
-# Theoretical mean and std dev for the distribution of sample means
-# Original die: mu_die = 3.5, var_die = E[X^2] - (E[X])^2 = (1+4+9+16+25+36)/6 - 3.5^2 = 15.166 - 12.25 = 2.9166
-# sigma_die = sqrt(2.9166)
-mu_die = 3.5
-var_die = ((np.arange(1,7) - mu_die)**2).mean() # More robust way to calc var_die
-sigma_die = np.sqrt(var_die)
-
-# According to CLT, the distribution of sample means should be:
-# Mean = mu_die
-# Std Dev (Standard Error) = sigma_die / sqrt(sample_size_k)
-mean_of_sample_means_theory = mu_die
-std_err_theory = sigma_die / np.sqrt(sample_size_k)
-
-# plt.figure(figsize=(10, 6))
-# plt.hist(means_of_samples, bins=50, density=True, alpha=0.7, label=f'Distribution of Sample Means (k={sample_size_k})')
-
-# Overlay theoretical Normal PDF
-# from scipy.stats import norm
-# x_axis = np.linspace(min(means_of_samples), max(means_of_samples), 200)
-# plt.plot(x_axis, norm.pdf(x_axis, loc=mean_of_sample_means_theory, scale=std_err_theory),
-#          'r-', lw=2, label='Theoretical Normal PDF (CLT)')
-
-# plt.title(f"Central Limit Theorem: Distribution of Sample Means (from {sample_size_k} Die Rolls)")
-# plt.xlabel("Sample Mean Value")
-# plt.ylabel("Density")
-# plt.legend()
-# plt.grid(True)
-# plt.show()
-
-# print(f"Observed mean of sample means: {np.mean(means_of_samples):.4f} (Theoretical: {mean_of_sample_means_theory:.4f})")
-# print(f"Observed std dev of sample means: {np.std(means_of_samples):.4f} (Theoretical Std Err: {std_err_theory:.4f})")
-```
-*The histogram of `means_of_samples` should closely resemble a bell curve (Normal distribution), even though the original die rolls are Uniform.*
+![clt](media/clt.png)
 
 ---
 
@@ -701,33 +430,3 @@ These inequalities are the workhorses for proving that machine learning algorith
 "With probability at least $1-\delta$, the true error of our learned hypothesis $h$ is no more than its training error plus some term that depends on $\epsilon$, $n$, $\delta$, and the complexity of the hypothesis class."
 $\epsilon$ here is often related to the "generalization gap" allowed.
 They form the basis for understanding how much data is needed to achieve a certain level of confidence in our model's performance on unseen data.
-
-**Implementation Note:**
-These inequalities are primarily theoretical tools for analysis, not something you typically "implement" directly in training code like you would an optimizer. However, understanding them informs choices about model complexity, dataset size, and interpreting generalization performance.
-
-```python
-# Illustrating Hoeffding's bound for Bernoulli trials (coin flips)
-n_flips = 1000 # Number of flips in one experiment
-true_p = 0.5   # True probability of heads
-epsilon = 0.05 # How far from the true_p we're checking
-
-hoeffding_bound = 2 * np.exp(-2 * n_flips * epsilon**2)
-# For Bernoulli, B=1 (range is 0 to 1)
-
-print(f"Hoeffding's bound for P(|sample_p - {true_p}| >= {epsilon}) with n={n_flips}: {hoeffding_bound:.2e}")
-# Example: For n=1000, p=0.5, epsilon=0.05:
-# bound = 2 * exp(-2 * 1000 * 0.05^2) = 2 * exp(-2 * 1000 * 0.0025) = 2 * exp(-5) approx 0.013
-
-# Simulate to see actual frequency (this is for illustration, not a proof of the bound)
-num_experiments = 5000
-deviations_count = 0
-for _ in range(num_experiments):
-    flips = np.random.binomial(1, true_p, n_flips)
-    sample_p = np.mean(flips)
-    if abs(sample_p - true_p) >= epsilon:
-        deviations_count += 1
-
-empirical_prob_of_deviation = deviations_count / num_experiments
-print(f"Empirical probability of deviation >= {epsilon}: {empirical_prob_of_deviation:.4f} (from {num_experiments} experiments)")
-# We expect empirical_prob_of_deviation to be less than or equal to hoeffding_bound
-```

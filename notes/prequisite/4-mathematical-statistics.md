@@ -1,5 +1,13 @@
 ## 4. Mathematical Statistics
 
+- [4. Mathematical Statistics](#4-mathematical-statistics)
+    - [a. Statistical Inference: The Goal](#a-statistical-inference-the-goal)
+    - [b. Samples, Statistics, and Estimators](#b-samples-statistics-and-estimators)
+    - [c. Point Estimation Methods: Maximum Likelihood Estimation (MLE)](#c-point-estimation-methods-maximum-likelihood-estimation-mle)
+    - [d. Bayesian Inference and Maximum A Posteriori (MAP) Estimation](#d-bayesian-inference-and-maximum-a-posteriori-map-estimation)
+    - [e. (Briefly) Hypothesis Testing \& Confidence Intervals](#e-briefly-hypothesis-testing--confidence-intervals)
+    - [f. Bias-Variance Tradeoff (Statistical Perspective)](#f-bias-variance-tradeoff-statistical-perspective)
+
 **Core of Statistics:** Mathematical statistics is the discipline that concerns the collection, analysis, interpretation, and presentation of data. It provides a <u>framework for learning from data in the presence of uncertainty and variability</u>. While probability theory deals with predicting the likelihood of future events based on a ***known*** model, **statistics focuses on inferring properties of an unknown underlying probability distribution or model from observed data.**
 
 **Relationship between Probability and Statistics:**
@@ -7,13 +15,13 @@
     - Assumes a model (e.g., a specific probability distribution with known parameters).
     - Calculates probabilities of various outcomes or events based on this model.
     - Deductive: From general model to specific predictions.
-    - Example: "If a coin is fair ($p=0.5$), what is the probability of getting 7 heads in 10 flips?"
+    - <span style='color:lightblue'>Example: "If a coin is fair ($p=0.5$), what is the probability of getting 7 heads in 10 flips?"</span>
 - **Mathematical Statistics:**
     - Observes data (samples).
     - Assumes the data comes from some underlying (often unknown) probability distribution or model.
     - Uses the data to make inferences about this unknown distribution or model (e.g., estimate its parameters, test hypotheses about it).
     - Inductive: From specific data to general conclusions about the model.
-    - Example: "Given I observed 7 heads in 10 flips, what is a good estimate for the coin's bias $p$? Is the coin fair?"
+    - <span style='color:lightblue'>Example: "Given I observed 7 heads in 10 flips, what is a good estimate for the coin's bias $p$? Is the coin fair?"</span>
 
 Statistics uses the tools of probability theory to quantify the uncertainty in its inferences.
 
@@ -23,8 +31,6 @@ Statistics uses the tools of probability theory to quantify the uncertainty in i
 - **Model Evaluation & Comparison:** Assessing how well a model performs, how it generalizes to unseen data, and if it's significantly better than alternatives.
 - **Uncertainty Quantification:** Understanding the confidence in model predictions or parameter estimates.
 - **Understanding Generalization:** Concepts like bias-variance tradeoff are statistical in nature.
-
----
 
 #### a. Statistical Inference: The Goal
 

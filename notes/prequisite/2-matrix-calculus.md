@@ -1,12 +1,16 @@
 ## Matrix Calculus
 
+- [Matrix Calculus](#matrix-calculus)
+    - [a. Gradient](#a-gradient)
+    - [b. Jacobian](#b-jacobian)
+    - [c. Hessian](#c-hessian)
+    - [d. Chain Rule (for vectors/matrices)](#d-chain-rule-for-vectorsmatrices)
+
 **Concept:** <u>Extends calculus concepts (derivatives, gradients) to functions involving matrices and vectors</u>. Essential for optimizing ML models.
 
 **Why it's important for ML/DL:**
 - **Optimization:** Most ML models are trained by minimizing a loss function. Gradient Descent and its variants require computing the gradient of the loss function with respect to model parameters (which are often matrices/vectors).
 - **Backpropagation:** The algorithm used to train neural networks is essentially an application of the chain rule from matrix calculus to compute gradients efficiently.
-
-**Key Concepts & Implementations:**
 
 #### a. Gradient
 
@@ -105,4 +109,3 @@ H = hessian(func_hessian, w_h_pt)
 # H = [[4, 2], [2, 12]]
 print(f"Hessian H (PyTorch):\n{H}")
 ```
-*For the talks, the PyTorch `autograd` part is key. Mentioning that `backward()` computes gradients which are essential for optimization via gradient descent is the main takeaway.*

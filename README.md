@@ -19,23 +19,32 @@
 
 - **Machine Learning/Statistical Learning**
   - [ ] [**Overview**](notes/machine-learning_statistical-learning/overview.md)
-    - Categories of ML models
-      - Supervised vs. Unsupervised
-      - Generative vs. Discriminative
-      - Parametric vs. Non-parametric
+    - Types of machine learning
+      - Supervised, (Semi-supervised), Unsupervised, Reinforcement
+      - By models
+        - Probabilistic, Non-probabilistic(Deterministic)
+        - Linear, Non-linear
+        - Parametric, Non-parametric
+      - By algorithms
+        - Online, Batch
+      - By techniques
+        - Bayesian, Kernel
     - Representation, Inference, and Learning
   - [ ] [**Regression**](notes/machine-learning_statistical-learning/regression.md)
-    - Polynomial Regression
     - Linear Regression
+      - Data
+      - Learning
+        - Closed-form solution
+          - time complexity
+        - Gradient Descent
+        - Stochastic Gradient Descent
       - Why MSE(Mean Squared Error)?
       - Bias-Variance Tradeoff
         - Overfitting and Underfitting
       - Regularization
         - Ridge, Lasso
         - MLE(Maximum Likelihood Estimation) and MAP(Maximum A Posteriori)
-      - Optimization
-        - Gradient Descent
-        - Stochastic Gradient Descent
+    - Polynomial Regression
     - Logistic Regression
       - logit, logistic, regression
       - Sigmoid(Logistic) and Softmax

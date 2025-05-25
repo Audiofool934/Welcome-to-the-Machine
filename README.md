@@ -51,7 +51,7 @@
       - Why CE(Cross Entropy)?
       - Criterion on classification
     - MLE, CE, and KL Divergence -->
-  - $ \cdots $ 🏗️ $ \text{work in progress} $ 🏗️ $ \cdots $
+
 - **Deep Learning**
   - [x] **Overview**
     <!-- - Why Deep Learning?
@@ -83,8 +83,6 @@
     <!-- - Sequence modeling
     - LSTM
     - GRU -->
-  - $ \cdots $ 🏗️ $ \text{work in progress} $ 🏗️ $ \cdots $
-
 
 <!-- - **Implementation**
   - [x] [`numpy`](https://numpy.org) scientific computing
@@ -103,6 +101,8 @@
     - DataLoader
     - Neural Networks -->
 
+... 🏗️ Work in Progress ...
+
 ---
 
 ## Hand-written Notes
@@ -118,5 +118,4 @@
 [On Convolutional Neural Networks](notes/deep-learning/on-convolutional-neural-networks.pdf)
 
 
-
-$ \cdots $ 🏗️ $ \text{work in progress} $ 🏗️ $ \cdots $
+... 🏗️ Work in Progress ...

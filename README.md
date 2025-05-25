@@ -51,7 +51,7 @@
       - Why CE(Cross Entropy)?
       - Criterion on classification
     - MLE, CE, and KL Divergence -->
-  - **$ \cdots $ 🏗️ $ \text{work in progress} $ 🏗️ $ \cdots $**
+  - $ \cdots $ 🏗️ $ \text{work in progress} $ 🏗️ $ \cdots $
 - **Deep Learning**
   - [x] **Overview**
     <!-- - Why Deep Learning?
@@ -83,7 +83,7 @@
     <!-- - Sequence modeling
     - LSTM
     - GRU -->
-  - **$ \cdots $ 🏗️ $ \text{work in progress} $ 🏗️ $ \cdots $**
+  - $ \cdots $ 🏗️ $ \text{work in progress} $ 🏗️ $ \cdots $
 
 
 <!-- - **Implementation**
@@ -119,4 +119,4 @@
 
 
 
-**$ \cdots $ 🏗️ $ \text{work in progress} $ 🏗️ $ \cdots $**
+$ \cdots $ 🏗️ $ \text{work in progress} $ 🏗️ $ \cdots $
